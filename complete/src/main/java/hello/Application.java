@@ -3,6 +3,7 @@ package hello;
 
 import javax.jms.ConnectionFactory;
 
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
@@ -47,6 +48,12 @@ public class Application {
 		// Send a message with a POJO - the template reuse the message converter
 		System.out.println("Sending an email message.");
 		jmsTemplate.convertAndSend("mailbox", new Email("info@example.com", "Hello"));
+	}
+	
+	@Bean 
+	public ConnectionFactory jmsConnectionFactory() { 
+		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616"); 
+		return connectionFactory; 
 	}
 
 }
